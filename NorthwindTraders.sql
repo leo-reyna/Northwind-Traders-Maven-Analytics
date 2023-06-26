@@ -26,3 +26,7 @@ FROM dbo.order_details AS ord
     ON ord.productID = prd.productID
 GROUP BY prd.productName
 ORDER BY SUM(ord.quantity) DESC;
+
+USE [Northwind Traders]
+SELECT *
+FROM dbo.Employees
