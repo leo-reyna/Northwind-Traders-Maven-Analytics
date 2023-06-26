@@ -12,3 +12,10 @@ Maven Analytics recommended analysis:
 * Which are the best and worst selling products?
 * Can you identify any key customers?
 * Are shipping costs consistent across providers?
+
+One of the primary objectives of this project is to construct a high-level KPI dashboard for the executive team. The purpose of this dashboard is to provide a quick and comprehensive understanding of the company's performance in crucial areas, including:
+
+### Sales trends
+* Product performance
+* Key customers
+* Shipping costs
