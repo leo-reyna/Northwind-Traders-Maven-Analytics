@@ -1,4 +1,4 @@
--- Maven Analytics Nortwind Traders Challenge
+-- Maven Analytics Northwind Traders Challenge
 -- Top Level Analysis
 
 USE [Northwind Traders]
@@ -10,7 +10,9 @@ SELECT COUNT(OrderID) as [Order Count]
 FROM dbo.orders;
 
 
-/* YTD Total Revenue */
+/* YTD Total Revenue 
+YTD Total Sales were $1.3 Million
+*/
 SELECT FORMAT(sum(quantity * unitPrice),'C') AS [YTD Total Sales]
 FROM dbo.order_details;
 
