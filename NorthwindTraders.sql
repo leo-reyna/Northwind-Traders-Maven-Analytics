@@ -7,6 +7,8 @@ USE [Northwind Traders]
 Count of Orders
 There a total of 830 Products
 */
+SELECT COUNT(OrderID) as [Order Count]
+FROM dbo.orders;
 
 /* YTD Total Revenue 
 YTD Total Sales were $1.354,458.59 Million
