@@ -40,23 +40,27 @@ INNER JOIN dbo.products AS prd
 GROUP BY prd.productName
 ORDER BY SUM(ord.quantity) DESC;
 
-/* TOP 5 Customer based on Net Sales:
-CUSTOMER NAME | NetSales | OrderCount
-QUICK-Stop	$110,277.31	86
-Ernst Handel	$104,874.98	102
-Save-a-lot Markets	$104,361.95	116
-Rattlesnake Canyon Grocery	$51,097.80	71
-Hungry Owl All-Night Grocers	$49,979.91	55
+/*
+TOP 5 Customer based on Net Sales:
+The top 3 customer account for 24% of total sales
+CustomerName	NetSales	OrderCount	SalesPercentage
+QUICK-Stop	$110,277.31	86	8.71%
+Ernst Handel	$104,874.98	102	8.29%
+Save-a-lot Markets	$104,361.95	116	8.24%
+Rattlesnake Canyon Grocery	$51,097.80	71	4.04%
+Hungry Owl All-Night Grocers	$49,979.91	55	3.95%
 */
-SELECT TOP 5
+
+SELECT
     cus.companyName AS CustomerName,
-    FORMAT(sum(ode.quantity * ode.unitPrice *(1 - ode.discount)),'C') AS NetSales,
-    COUNT(ode.orderID) AS OrderCount
-FROM dbo.customers AS cus 
-INNER JOIN dbo.orders AS ord 
-    ON cus.customerID = ord.customerID
-INNER JOIN dbo.order_details AS ode 
-    ON ord.OrderID = ode.orderID
-GROUP BY cus.companyName  
-ORDER BY sum(ode.quantity * ode.unitPrice *(1 - ode.discount)) DESC;
+    FORMAT(SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)), 'C') AS NetSales,
+    COUNT(ode.orderID) AS OrderCount,
+    FORMAT(SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) / 
+        (SELECT SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) FROM dbo.order_details ode), 'P') AS SalesPercentage  
+FROM dbo.customers AS cus
+INNER JOIN dbo.orders AS ord ON cus.customerID = ord.customerID
+INNER JOIN dbo.order_details AS ode ON ord.OrderID = ode.orderID
+GROUP BY cus.companyName
+ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) DESC
+OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
