@@ -5,7 +5,7 @@ USE [Northwind Traders]
 
 /* SALES 
 Count of Orders
-There a total of 830 Products
+There are a total of 830 Products
 */
 SELECT 
     COUNT(OrderID) as [Order Count]
@@ -26,10 +26,12 @@ SELECT
 FROM dbo.order_details;
 
 /* TOP 5 PRODUCTS 
-The number 1 product is Camember Pierrot with 1,577, 
-2nd Place Raclette Couravault with 1,496  and 3rd place 
-to Gorgonzola Telino with 1,397 pieces, 4th place goes 
-to Gnocchi di nonna Alice at 1,263 and on 5th place is Pavlova with 1,158
+Product Name	Qty Sold
+Camembert Pierrot	1,577
+Raclette Courdavault	1,496
+Gorgonzola Telino	1,397
+Gnocchi di nonna Alice	1,263
+Pavlova	1,158
 */
 SELECT TOP 5
     prd.productName AS [Product Name],
@@ -42,7 +44,7 @@ ORDER BY SUM(ord.quantity) DESC;
 
 /*
 TOP 5 Customer based on Net Sales:
-The top 3 customer account for 24% of total sales
+The top 3 customers account for 24% of total sales
 CustomerName	NetSales	OrderCount	SalesPercentage
 QUICK-Stop	$110,277.31	86	8.71%
 Ernst Handel	$104,874.98	102	8.29%
@@ -56,7 +58,8 @@ SELECT
     FORMAT(SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)), 'C') AS NetSales,
     COUNT(ode.orderID) AS OrderCount,
     FORMAT(SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) / 
-        (SELECT SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) FROM dbo.order_details ode), 'P') AS SalesPercentage  
+        (SELECT 
+        SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) FROM dbo.order_details ode), 'P') AS SalesPercentage  
 FROM dbo.customers AS cus
 INNER JOIN dbo.orders AS ord ON cus.customerID = ord.customerID
 INNER JOIN dbo.order_details AS ode ON ord.OrderID = ode.orderID
@@ -64,3 +67,19 @@ GROUP BY cus.companyName
 ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) DESC
 OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
 
+/* Lowest Net Sale Month and Year 
+May of 2015
+Year	Month	NetSales
+2015	5	$18,333.63
+*/
+SELECT top 1 with ties	
+	DATEPART(YEAR, ord.orderDate) AS Year,
+	DATEPART(MONTH, ord.orderDate) AS Month,
+	FORMAT(sum(ode.quantity * ode.unitPrice  * (1 - ode.discount)),'C') AS NetSales
+FROM dbo.order_details AS ode 
+INNER JOIN dbo.orders AS ord 
+    ON ode.orderID = ord.orderID
+GROUP BY
+	DATEPART(YEAR, ord.orderDate),
+	DATEPART(MONTH, ord.orderDate)
+ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount))
