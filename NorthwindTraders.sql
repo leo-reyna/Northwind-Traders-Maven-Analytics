@@ -34,18 +34,26 @@ FROM dbo.orders;
 /* Count of Customers 
 There are 91 Customers*/
 SELECT 
-    DISTINCT(COUNT(*)) AS [Customer Count]
+    COUNT(DISTINCT(customerID)) AS [Count of Customer]
 FROM
     Customers;
+
 
 /* Count of Products 
 There are 77 Products*/
 
 SELECT
-    DISTINCT(COUNT(productID)) AS [Product Count]
+    COUNT(DISTINCT(productID)) AS [Products Count]
 FROM
     dbo.products;
-    
+
+SELECT
+    COUNT(DISTINCT(country))
+FROM 
+    dbo.customers;
+
+
+
 /* TOP 5 PRODUCTS 
 Product Name	Qty Sold
 Camembert Pierrot	1,577
