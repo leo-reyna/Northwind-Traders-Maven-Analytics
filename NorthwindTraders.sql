@@ -12,7 +12,7 @@ SELECT
 FROM dbo.orders;
 
 /* YTD Total Revenue 
-YTD Total Sales were $1.354,458.59 Million
+YTD Total Sales were $1,354,458.59 Million
 */
 SELECT 
     FORMAT(sum(quantity * unitPrice),'C') AS [YTD Total Sales]
@@ -25,6 +25,27 @@ SELECT
     FORMAT(sum(quantity * unitPrice *(1- discount)),'C') AS [YTD Net Sales]
 FROM dbo.order_details;
 
+/* Cost of Freight 
+Total Cost YTD $64K 
+*/
+SELECT FORMAT(CAST(SUM(freight) AS decimal (10,2)), 'C') AS [Cost of Freight]
+FROM dbo.orders;
+
+/* Count of Customers 
+There are 91 Customers*/
+SELECT 
+    DISTINCT(COUNT(*)) AS [Customer Count]
+FROM
+    Customers;
+
+/* Count of Products 
+There are 77 Products*/
+
+SELECT
+    DISTINCT(COUNT(productID)) AS [Product Count]
+FROM
+    dbo.products;
+    
 /* TOP 5 PRODUCTS 
 Product Name	Qty Sold
 Camembert Pierrot	1,577
@@ -61,8 +82,10 @@ SELECT
         (SELECT 
         SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) FROM dbo.order_details ode), 'P') AS SalesPercentage  
 FROM dbo.customers AS cus
-INNER JOIN dbo.orders AS ord ON cus.customerID = ord.customerID
-INNER JOIN dbo.order_details AS ode ON ord.OrderID = ode.orderID
+INNER JOIN dbo.orders AS ord 
+    ON cus.customerID = ord.customerID
+INNER JOIN dbo.order_details AS ode 
+    ON ord.OrderID = ode.orderID
 GROUP BY cus.companyName
 ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount)) DESC
 OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
@@ -83,3 +106,5 @@ GROUP BY
 	DATEPART(YEAR, ord.orderDate),
 	DATEPART(MONTH, ord.orderDate)
 ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount))
+
+
