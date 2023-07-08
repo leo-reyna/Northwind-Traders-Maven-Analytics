@@ -38,7 +38,6 @@ SELECT
 FROM
     Customers;
 
-
 /* Count of Products 
 There are 77 Products*/
 
@@ -47,8 +46,11 @@ SELECT
 FROM
     dbo.products;
 
+/* Count of Countries
+There are 21 Countries*/
+
 SELECT
-    COUNT(DISTINCT(country))
+    COUNT(DISTINCT(country)) AS [Count of Countries]
 FROM 
     dbo.customers;
 
