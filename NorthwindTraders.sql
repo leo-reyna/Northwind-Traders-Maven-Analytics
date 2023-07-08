@@ -28,12 +28,13 @@ FROM dbo.order_details;
 /* Cost of Freight 
 Total Cost YTD $64K 
 */
-SELECT FORMAT(CAST(SUM(freight) AS decimal (10,2)), 'C') AS [Cost of Freight]
+SELECT 
+    FORMAT(CAST(SUM(freight) AS decimal (10,2)), 'C') AS [Cost of Freight]
 FROM dbo.orders;
 
 /* Count of Customers 
 There are 91 Customers*/
-SELECT 
+SELECT  
     COUNT(DISTINCT(customerID)) AS [Count of Customer]
 FROM
     Customers;
