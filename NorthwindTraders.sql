@@ -1,5 +1,7 @@
 -- Maven Analytics Northwind Traders Challenge
 -- Top Level Analysis
+-- June 2023
+-- Leo Reyna
 
 USE [Northwind Traders]
 
