@@ -22,3 +22,4 @@ One of the primary objectives of this project is to construct a high-level KPI d
 * Product performance
 * Key customers
 * Shipping costs
+* Orders Overview
