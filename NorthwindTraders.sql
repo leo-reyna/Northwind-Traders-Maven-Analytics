@@ -120,4 +120,23 @@ GROUP BY
 	DATEPART(MONTH, ord.orderDate)
 ORDER BY SUM(ode.quantity * ode.unitPrice * (1 - ode.discount))
 
+-- Order Count by Year, Month
+SELECT 
+    DATENAME(MONTH, orderDate) AS MonthName,
+    DATEPART(YEAR, orderDate) AS Year,
+    COUNT (distinct(orderID)) as SalesCount
+FROM dbo.orders
+GROUP by 
+    DATEPART(MONTH, orderDate),
+    DATEPART(YEAR, orderDate),
+    DATENAME(MONTH, orderDate)
+ORDER BY Year
 
+-- Order Count per Year
+
+SELECT
+    COUNT(orderID) as OrderCount,
+    DATEPART(YEAR, orderDate) AS Year
+FROM dbo.orders
+GROUP BY
+    DATEPART(YEAR, orderDate)
