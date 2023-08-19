@@ -140,3 +140,13 @@ SELECT
 FROM dbo.orders
 GROUP BY
     DATEPART(YEAR, orderDate)
+--
+SELECT 
+    CONCAT(DATENAME(MONTH, orderDate), ' ', DATEPART(YEAR, orderDate)) AS Year,
+    COUNT (distinct(orderID)) as SalesCount
+FROM dbo.orders
+GROUP by 
+    DATEPART(MONTH, orderDate),
+    DATEPART(YEAR, orderDate),
+    DATENAME(MONTH, orderDate)
+ORDER BY Year

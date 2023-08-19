@@ -15,7 +15,7 @@ Maven Analytics recommended analysis:
 * Can you identify any key customers?
 * Are shipping costs consistent across providers?
 
-One of the primary objectives of this project is to construct a high-level KPI dashboard for the executive team. The purpose of this dashboard is to provide a quick and comprehensive understanding of the company's performance in crucial areas, including:
+One of the main goals of this project is to design a high-level Key Performance Indicator (KPI) reporting system using SQL for the executive team. This reporting system aims to offer a rapid and comprehensive insight into the company's performance across essential domains, such as:
 
 ## Sales Trends
 
