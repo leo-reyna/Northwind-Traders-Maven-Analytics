@@ -58,7 +58,6 @@ FROM
     dbo.customers;
 
 
-
 /* TOP 5 PRODUCTS 
 Product Name	Qty Sold
 Camembert Pierrot	1,577
